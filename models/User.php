@@ -18,6 +18,10 @@ use yii\web\IdentityInterface;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property string $phone
+ * @property string $about
+ * @property string $avatar
+ *
  * @property string $password write-only password
  */
 class User extends ActiveRecord implements IdentityInterface
@@ -48,7 +52,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            TimestampBehavior::class,
         ];
     }
     /**
@@ -61,6 +65,10 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
             ['email', 'email'],
             ['username', 'string'],
+            [['username', 'email'], 'required'],
+            [['username', 'about'], 'string'],
+            [['username', 'about'], 'trim'],
+            ['phone', 'number'],
         ];
     }
     /**
