@@ -1,5 +1,4 @@
 <?php
-
 /* @var $this \yii\web\View */
 
 /* @var $content string */
@@ -9,7 +8,7 @@ use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 use yii\bootstrap4\Breadcrumbs;
 use app\assets\AppAsset;
-use yii\bootstrap4\Alert;
+use app\widgets\Alert;
 
 AppAsset::register($this);
 ?>
@@ -46,19 +45,19 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
-        $menuItems[] = ['label' => 'Мой профиль', 'url' => ['/user/profile']];
 
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
+        $menuItems[] = ['label' => 'Мой профиль', 'url' => ['/user/profile']];
+        $menuItems[] = '<li class="nav-item">' .
+               Html::a('Logout (' . Yii::$app->user->identity->username . ')', ['site/logout'], [
+                   'class' => 'nav-link',
+                   'data' => [
+                       'method' => 'post',
+                   ],
+               ])
             . '</li>';
     }
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
+        'options' => ['class' => 'navbar-nav ml-auto flex-column-reverse flex-md-row'],
         'items' => $menuItems,
     ]);
     NavBar::end();
@@ -67,7 +66,7 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        <?php echo Alert::widget() ?>
+        <?=Alert::widget() ?>
         <?= $content ?>
     </div>
 </div>
