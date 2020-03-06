@@ -5,17 +5,16 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `{{%lesson_commit}}`.
  */
-class m200304_163409_create_lesson_commit_table extends Migration
+class m200304_163409_create_lesson_comment_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('lesson_commit', [
-            'id' => $this->primaryKey(),
+        $this->createTable('lesson_comment', [
             'lesson_id' => $this->integer()->notNull(),
-            'commit_id' => $this->integer()->notNull(),
+            'comment_id' => $this->integer()->notNull(),
         ]);
     }
 
@@ -24,7 +23,7 @@ class m200304_163409_create_lesson_commit_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('lesson_commit');
+        $this->dropTable('lesson_comment');
         return true;
     }
 
