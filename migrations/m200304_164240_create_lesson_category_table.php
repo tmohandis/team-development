@@ -13,7 +13,6 @@ class m200304_164240_create_lesson_category_table extends Migration
     public function safeUp()
     {
         $this->createTable('lesson_category', [
-            'id' => $this->primaryKey(),
             'lesson_id' => $this->integer()->notNull(),
             'category_id' => $this->integer()->notNull(),
         ]);
