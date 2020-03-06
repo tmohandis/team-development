@@ -22,8 +22,7 @@ class m200302_165210_create_lesson_table extends Migration
             'creator_id' => $this->integer()->notNull(),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer(),
-            'file_id' => $this->integer(),
-            'commit_id' => $this->integer(),
+            'file_id' => $this->integer()
         ]);
     }
 
