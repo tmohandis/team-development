@@ -3,7 +3,7 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%lesson_commit}}`.
+ * Handles the creation of table `{{%lesson_comment}}`.
  */
 class m200304_163409_create_lesson_comment_table extends Migration
 {
