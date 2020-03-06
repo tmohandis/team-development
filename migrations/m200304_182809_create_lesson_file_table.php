@@ -13,7 +13,6 @@ class m200304_182809_create_lesson_file_table extends Migration
     public function safeUp()
     {
         $this->createTable('lesson_file', [
-            'id' => $this->primaryKey(),
             'lesson_id' => $this->integer()->notNull(),
             'file_id' => $this->integer()->notNull(),
         ]);
