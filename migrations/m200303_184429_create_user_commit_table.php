@@ -5,16 +5,15 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `{{%user_commit}}`.
  */
-class m200303_184429_create_user_commit_table extends Migration
+class m200303_184429_create_user_comment_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('user_commit', [
-            'id' => $this->primaryKey(),
-            'commit_id' => $this->integer()->notNull(),
+        $this->createTable('user_comment', [
+            'comment_id' => $this->integer()->notNull(),
             'user_id' => $this->integer()->notNull(),
         ]);
     }
@@ -24,7 +23,7 @@ class m200303_184429_create_user_commit_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('user_commit');
+        $this->dropTable('user_comment');
         return true;
     }
 
