@@ -3,18 +3,18 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%commit}}`.
+ * Handles the creation of table `{{%comment}}`.
  */
-class m200303_183747_create_commit_table extends Migration
+class m200303_183747_create_comment_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('commit', [
+        $this->createTable('comment', [
             'id' => $this->primaryKey(),
-            'commit' => $this->text()->notNull(),
+            'comment' => $this->text()->notNull(),
             'created_at' => $this->integer()->notNull(),
         ]);
     }
@@ -24,7 +24,7 @@ class m200303_183747_create_commit_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('commit');
+        $this->dropTable('comment');
         return true;
     }
 }
