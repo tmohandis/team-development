@@ -13,7 +13,6 @@ class m200304_165416_create_user_achievement_table extends Migration
     public function safeUp()
     {
         $this->createTable('user_achievement', [
-            'id' => $this->primaryKey(),
             'user_id' => $this->integer()->notNull(),
             'achievement_id' => $this->integer()->notNull(),
         ]);
