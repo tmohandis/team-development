@@ -1,19 +1,20 @@
 <?php
 namespace app\controllers;
 
-use app\models\ResendVerificationEmailForm;
-use app\models\VerifyEmailForm;
+use app\models\forms\ResendVerificationEmailForm;
+use app\models\forms\VerifyEmailForm;
 use Yii;
+use yii\base\Exception;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use app\models\LoginForm;
-use app\models\PasswordResetRequestForm;
-use app\models\ResetPasswordForm;
-use app\models\SignupForm;
-use app\models\ContactForm;
+use app\models\forms\LoginForm;
+use app\models\forms\PasswordResetRequestForm;
+use app\models\forms\ResetPasswordForm;
+use app\models\forms\SignupForm;
+use app\models\forms\ContactForm;
 
 /**
  * Site controller
@@ -27,7 +28,7 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'only' => ['logout', 'signup'],
                 'rules' => [
                     [
@@ -43,7 +44,7 @@ class SiteController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
                 ],
@@ -149,6 +150,7 @@ class SiteController extends Controller
      * Signs user up.
      *
      * @return mixed
+     * @throws Exception
      */
     public function actionSignup()
     {
@@ -192,6 +194,7 @@ class SiteController extends Controller
      * @param string $token
      * @return mixed
      * @throws BadRequestHttpException
+     * @throws Exception
      */
     public function actionResetPassword($token)
     {
