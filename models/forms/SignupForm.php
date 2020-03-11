@@ -1,7 +1,9 @@
 <?php
-namespace app\models;
+
+namespace app\models\forms;
 
 use Yii;
+use yii\base\Exception;
 use yii\base\Model;
 use app\models\User;
 
@@ -41,6 +43,7 @@ class SignupForm extends Model
      * Signs user up.
      *
      * @return bool whether the creating new account was successful and email was sent
+     * @throws Exception
      */
     public function signup()
     {
