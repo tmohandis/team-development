@@ -1,12 +1,12 @@
 <?php
-
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
+use yii\bootstrap4\Nav;
+use yii\bootstrap4\NavBar;
+use yii\bootstrap4\Breadcrumbs;
 use app\assets\AppAsset;
 use app\widgets\Alert;
 
@@ -28,43 +28,46 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
+
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => 'GeekProject',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'class' => 'navbar navbar-expand-lg navbar-light bg-light fixed-top',
         ],
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
         ['label' => 'About', 'url' => ['/site/about']],
+        ['label' => 'Категории', 'url' => ['/category']],
         ['label' => 'Contact', 'url' => ['/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
+
+        $menuItems[] = ['label' => 'Мой профиль', 'url' => ['/user/profile']];
+        $menuItems[] = '<li class="nav-item">' .
+               Html::a('Logout (' . Yii::$app->user->identity->username . ')', ['site/logout'], [
+                   'class' => 'nav-link',
+                   'data' => [
+                       'method' => 'post',
+                   ],
+               ])
             . '</li>';
     }
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
+        'options' => ['class' => 'navbar-nav ml-auto flex-column-reverse flex-md-row'],
         'items' => $menuItems,
     ]);
     NavBar::end();
     ?>
-
     <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        <?= Alert::widget() ?>
+        <?=Alert::widget() ?>
         <?= $content ?>
     </div>
 </div>
@@ -72,9 +75,6 @@ AppAsset::register($this);
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
 </footer>
 
 <?php $this->endBody() ?>

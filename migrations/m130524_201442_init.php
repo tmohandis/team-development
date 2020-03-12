@@ -25,7 +25,7 @@ class m130524_201442_init extends Migration
             'updated_at' => $this->integer()->notNull(),
             'avatar' => $this->string(),
             'about' => $this->text(),
-            'exp' => $this->integer()->notNull(),
+            'exp' => $this->integer()->notNull()->defaultValue(10),
 
         ], $tableOptions);
     }
