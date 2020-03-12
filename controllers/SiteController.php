@@ -3,6 +3,7 @@ namespace app\controllers;
 
 use app\models\forms\ResendVerificationEmailForm;
 use app\models\forms\VerifyEmailForm;
+use app\models\Lesson;
 use Yii;
 use yii\base\Exception;
 use yii\base\InvalidArgumentException;
@@ -75,7 +76,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $lessons = Lesson::find()->all();
+        return $this->render('index', [
+            'lessons' => $lessons
+        ]);
     }
 
     /**
