@@ -14,33 +14,22 @@ $this->title = 'Дерево категорий';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<pre><?php ?></pre>
+<pre><?php print_r($items)?></pre>
 
-<?php
-
-try {
-    echo \wbraganca\fancytree\FancytreeWidget::widget([
-        'options' => [
-            'source' => $data,
-            'extensions' => ['dnd'],
-            'dnd' => [
-                'preventVoidMoves' => true,
-                'preventRecursiveMoves' => true,
-                'autoExpandMS' => 400,
-                'dragStart' => new JsExpression('function(node, data) {
-                    return true;
-                }'),
-                'dragEnter' => new JsExpression('function(node, data) {
-                    return true;
-                }'),
-                'dragDrop' => new JsExpression('function(node, data) {
-                    data.otherNode.moveTo(node, data.hitMode);
-                }'),
-            ],
-        ]
-    ]);
-} catch (Exception $e) {
-}
+<?php echo yii2mod\tree\Tree::widget([
+    'items' => $items,
+    'clientOptions' => [
+        'autoCollapse' => true,
+        'clickFolderMode' => 3,
+        'activate' => new \yii\web\JsExpression('
+                        function(node, data) {
+                              node  = data.node;
+                              // Log node title
+                              console.log(node.title);
+                        }
+                '),
+    ],
+]);
 
 
 

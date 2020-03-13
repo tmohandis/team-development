@@ -16,7 +16,6 @@ use Yii;
  * @property int $lft
  * @property int $rgt
  * @property int $depth
- * @property string|null $url
  * @property string|null $parent_category_name
  * @property string $category_name
  *
@@ -54,9 +53,8 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['url', 'category_name'], 'required'],
+            [['category_name'], 'required'],
             [['lft', 'rgt', 'depth'], 'integer'],
-            [['url'], 'string', 'max' => 100],
             [['tree', 'lft', 'rgt', 'depth'], 'safe'],
             [['parent_category', 'parent_category_name', 'category_name'], 'string', 'max' => 255],
         ];
@@ -73,7 +71,6 @@ class Category extends \yii\db\ActiveRecord
             'lft' => 'Lft',
             'rgt' => 'Rgt',
             'depth' => 'Depth',
-            'url' => 'Url',
             'parent_category_name' => 'Родительская категория',
             'category_name' => 'Категория',
         ];

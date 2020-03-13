@@ -36,7 +36,7 @@ class CategoryController extends Controller
     public function actionTree($id=1)
     {
         return $this->render('tree', [
-            'data' => Category::findOne($id)->tree()
+            'items' => Category::findOne($id)->tree()
         ]);
     }
 
