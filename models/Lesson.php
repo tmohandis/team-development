@@ -29,11 +29,6 @@ use yii\behaviors\TimestampBehavior;
  */
 class Lesson extends \yii\db\ActiveRecord
 {
-    public $friendly_file_name;
-    public $lesson_file;
-
-    const SCENARIO_CREATE = 'create';
-
     const RELATION_CREATOR_USER = 'creatorUser';
 
     public function behaviors()
@@ -63,9 +58,8 @@ class Lesson extends \yii\db\ActiveRecord
     {
         return [
             [['category_id', 'file_id'], 'integer'],
-            [['lesson_file'], 'file', 'skipOnEmpty' => false, 'extensions' => ['pdf', 'doc', 'docx', 'xls', 'xlsx']],
-            [['friendly_file_name', 'title', 'preview', 'short_description', 'description', 'lesson_file'], 'required'],
-            [['short_description', 'description', 'friendly_file_name'], 'string'],
+            [['title', 'preview', 'short_description', 'description'], 'required'],
+            [['short_description', 'description'], 'string'],
             [['title', 'preview'], 'string', 'max' => 255],
             [['creator_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['creator_id' => 'id']],
         ];
@@ -83,8 +77,6 @@ class Lesson extends \yii\db\ActiveRecord
             'preview' => 'Preview',
             'short_description' => 'Краткое описание',
             'description' => 'Описание',
-            'friendly_file_name' => 'Название файла',
-            'lesson_file' => 'Файл урока',
             'creator_id' => 'Creator ID',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -153,6 +145,6 @@ class Lesson extends \yii\db\ActiveRecord
      */
     public static function find()
     {
-        return new \app\models\queries\LessonQuery(get_called_class());
+        return new \app\models\query\LessonQuery(get_called_class());
     }
 }
