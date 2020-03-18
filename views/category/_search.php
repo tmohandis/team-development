@@ -19,8 +19,7 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?php  echo $form->field($model, 'parent_category_name') ?>
-    <?php  echo $form->field($model, 'category_name') ?>
+    <?php  echo $form->field($model, 'category_name')->label('Поиск нужной категории'); ?>
 
     <div class="form-group">
         <?= Html::submitButton('Поиск', ['class' => 'btn btn-primary']) ?>

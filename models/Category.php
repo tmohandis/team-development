@@ -16,8 +16,8 @@ use Yii;
  * @property int $lft
  * @property int $rgt
  * @property int $depth
- * @property string|null $parent_category_name
  * @property string $category_name
+ * @property string|null $short_description
  *
  * @property LessonCategory[] $lessonCategories
  */
@@ -32,12 +32,14 @@ class Category extends \yii\db\ActiveRecord
         return [
             'tree' => [
                 'class' => NestedSetsBehavior::className(),
+                'treeAttribute' => 'tree',
             ],
             'htmlTree' => [
                 'class' => NestedSetsTreeBehavior::className()
             ],
         ];
     }
+
 
     /**
      * {@inheritdoc}
@@ -56,7 +58,7 @@ class Category extends \yii\db\ActiveRecord
             [['category_name'], 'required'],
             [['lft', 'rgt', 'depth'], 'integer'],
             [['tree', 'lft', 'rgt', 'depth'], 'safe'],
-            [['parent_category', 'parent_category_name', 'category_name'], 'string', 'max' => 255],
+            [['parent_category', 'short_description', 'category_name'], 'string', 'max' => 255],
         ];
     }
 
@@ -70,8 +72,8 @@ class Category extends \yii\db\ActiveRecord
             'tree' => 'Tree',
             'lft' => 'Lft',
             'rgt' => 'Rgt',
-            'depth' => 'Depth',
-            'parent_category_name' => 'Родительская категория',
+            'depth' => 'Уровень категории',
+            'short_description' => 'Краткое описание',
             'category_name' => 'Категория',
         ];
     }

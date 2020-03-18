@@ -12,11 +12,12 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'parent_category')->dropDownList([\yii\helpers\ArrayHelper::map(\app\models\Category::find()->all(), 'id', 'parent_category_name')]) ?>
-
-    <?= $form->field($model, 'parent_category_name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'parent_category')->dropDownList([\yii\helpers\ArrayHelper::map(\app\models\Category::find()->all(), 'id', 'category_name')])
+        ->label('Уровень категории'); ?>
 
     <?= $form->field($model, 'category_name')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'short_description')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
