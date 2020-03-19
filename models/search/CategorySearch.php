@@ -15,7 +15,7 @@ class CategorySearch extends Category
     {
         return [
             [['id', 'tree', 'lft', 'rgt', 'depth'], 'integer'],
-            [['parent_category_name', 'category_name'], 'safe'],
+            [['short_description', 'category_name'], 'safe'],
         ];
     }
 
@@ -62,8 +62,8 @@ class CategorySearch extends Category
             'depth' => $this->depth,
         ]);
 
-        $query->andFilterWhere(['like', 'parent_category_name', $this->parent_category_name])
-            ->andFilterWhere(['like', 'category_name', $this->category_name]);
+        $query->andFilterWhere(['like', 'category_name', $this->category_name])
+            ->andFilterWhere(['like', 'short_description', $this->short_description]);
 
         return $dataProvider;
     }
