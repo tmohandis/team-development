@@ -12,6 +12,16 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        //            https://github.com/chemezov/yii2-yandex-cloud
+        's3' => [
+            'class' => 'chemezov\yii2\yandex\cloud\Service',
+            'credentials' => [ // Aws\Credentials\CredentialsInterface|array|callable
+                'key' => 'ixFjOdRgu3yWr8GeeVbw',
+                'secret' => 'ia7Qb1lUeROj_h4mNWR_e7HGASkD557dPO8cBG6M',
+            ],
+            'region' => 'ru-central1',
+            'defaultBucket' => 'lessons-portal',
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'Adk9XWA6D9mSCElhwLZDIyqtp0ogmjOs',
