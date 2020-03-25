@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Comment;
 use Yii;
 use app\models\Lesson;
 use app\models\search\LessonSearch;
@@ -54,8 +55,12 @@ class LessonController extends Controller
      */
     public function actionView($id)
     {
+        $lesson = $this->findModel($id);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $lesson,
+            'comment'=> new Comment(),
+            'commentsUsers' => $lesson->getCommentsUsersArray(),
         ]);
     }
 

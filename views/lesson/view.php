@@ -1,10 +1,13 @@
 <?php
 
+use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Lesson */
+/* @var $comment app\models\Comment */
+/* @var $commentsUsers */
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Lessons', 'url' => ['index']];
@@ -42,4 +45,39 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
+    <h4>Комментарии</h4>
+    <hr class="my-4">
+
+    <div class="row">
+        <div class="comments col-md-5">
+            <?php foreach ($commentsUsers as $commentUser) : ?>
+                <div class="comment">
+                    <div class="comment-username">
+                        <h5><?= Html::encode($commentUser['username']) ?></h5>
+                        <p class="text-muted"><?= date("j F Y, G:i", $commentUser['date']) ?></p>
+                    </div>
+                    <div class="comment-body">
+                        <p class="card-text"><?= Html::encode($commentUser['comment']) ?></p>
+                    </div>
+                    <hr class="my-4">
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <?php $form = ActiveForm::begin([
+                'action' => "/comment/create?lessonId=$model->id",
+            ]); ?>
+
+            <?= $form->field($comment, 'comment')->textarea(['rows' => 2])->label('') ?>
+
+            <div class="form-group">
+                <?= Html::submitButton('Отправить', ['class' => 'btn btn-primary']) ?>
+            </div>
+
+            <?php ActiveForm::end(); ?>
+        </div>
+    </div>
 </div>
