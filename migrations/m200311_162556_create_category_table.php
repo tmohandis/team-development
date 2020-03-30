@@ -18,7 +18,7 @@ class m200311_162556_create_category_table extends Migration
             'lft' => $this->integer()->notNull(),
             'rgt' => $this->integer()->notNull(),
             'depth' => $this->integer()->notNull(),
-            'category_name' => $this->string(255)->notNull(),
+            'name' => $this->string(255)->notNull(),
             'short_description' => $this->string(255),
         ]);
     }

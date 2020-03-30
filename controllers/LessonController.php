@@ -2,18 +2,18 @@
 
 namespace app\controllers;
 
-use wokster\treebehavior\NestedSetsTreeBehavior;
 use Yii;
-use app\models\Category;
-use app\models\search\CategorySearch;
+use app\models\Lesson;
+use app\models\search\LessonSearch;
+use yii\behaviors\TimestampBehavior;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CategoryController implements the CRUD actions for Category model.
+ * LessonController implements the CRUD actions for Lesson model.
  */
-class CategoryController extends Controller
+class LessonController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -21,24 +21,23 @@ class CategoryController extends Controller
     public function behaviors()
     {
         return [
-            'htmlTree' => [
-                'class' => NestedSetsTreeBehavior::className(),
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
             ],
+            TimestampBehavior::className(),
         ];
     }
+
     /**
-     * Lists all Category models.
+     * Lists all Lesson models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new CategorySearch();
+        $searchModel = new LessonSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -48,7 +47,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Displays a single Category model.
+     * Displays a single Lesson model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,31 +60,25 @@ class CategoryController extends Controller
     }
 
     /**
-     * Creates a new Category model.
+     * Creates a new Lesson model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Category();
-        if ($model->load(Yii::$app->request->post())) {
-            if($model->parent_category == null){
-                $model->makeRoot();
-            }else{
-                $parent = Category::find()->andWhere(['id'=>$model->parent_category])->one();
-                $model->prependTo($parent);
-            }
-            if($model->save()){
-                return  $this->redirect(['view', 'id' =>  $model->id]);
-            }
+        $model = new Lesson();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
+
         return $this->render('create', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Updates an existing Category model.
+     * Updates an existing Lesson model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -105,7 +98,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Deletes an existing Category model.
+     * Deletes an existing Lesson model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -119,19 +112,18 @@ class CategoryController extends Controller
     }
 
     /**
-     * Finds the Category model based on its primary key value.
+     * Finds the Lesson model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Category the loaded model
+     * @return Lesson the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Category::findOne($id)) !== null) {
+        if (($model = Lesson::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-
 }
