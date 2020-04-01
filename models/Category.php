@@ -40,7 +40,6 @@ class Category extends \yii\db\ActiveRecord
         ];
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -55,10 +54,10 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['category_name'], 'required'],
+            [['name'], 'required'],
             [['lft', 'rgt', 'depth'], 'integer'],
             [['tree', 'lft', 'rgt', 'depth'], 'safe'],
-            [['parent_category', 'short_description', 'category_name'], 'string', 'max' => 255],
+            [['parent_category', 'short_description', 'name'], 'string', 'max' => 255],
         ];
     }
 
@@ -74,7 +73,7 @@ class Category extends \yii\db\ActiveRecord
             'rgt' => 'Rgt',
             'depth' => 'Уровень категории',
             'short_description' => 'Краткое описание',
-            'category_name' => 'Категория',
+            'name' => 'Категория',
         ];
     }
 
@@ -87,5 +86,4 @@ class Category extends \yii\db\ActiveRecord
     {
         return new CategoryQuery(get_called_class());
     }
-
 }
