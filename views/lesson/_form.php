@@ -6,11 +6,14 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\Lesson */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $categotiesNames app\models\Category[] */
 ?>
 
 <div class="lesson-form">
 
     <?php $form = ActiveForm::begin(); ?>
+
+    <?= $form->field($model, 'category_id')->label('Категория')->dropDownList($categoriesNames)?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 

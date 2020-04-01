@@ -3,15 +3,14 @@
 namespace app\models\query;
 
 use app\models\Lesson;
-use app\models\LessonUser;
 use yii\db\ActiveQuery;
 
 /**
- * This is the ActiveQuery class for [[Lesson]].
+ * This is the ActiveQuery class for [[LessonFile]].
  *
- * @see Lesson
+ * @see LessonFile
  */
-class LessonQuery extends ActiveQuery
+class LessonFileQuery extends ActiveQuery
 {
     /*public function active()
     {
@@ -34,12 +33,5 @@ class LessonQuery extends ActiveQuery
     public function one($db = null)
     {
         return parent::one($db);
-    }
-
-    public function byUser($userId)
-    {
-        $query = LessonUser::find()->select('lesson_id')->byUser($userId);
-
-        return $this->andWhere(['id' => $query]);
     }
 }

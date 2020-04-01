@@ -6,6 +6,7 @@ use app\models\Lesson;
 use app\models\User;
 use Yii;
 use app\models\Comment;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -19,7 +20,18 @@ class CommentController extends Controller
      */
     public function behaviors()
     {
-        return [];
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['create'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@']
+                    ]
+                ],
+            ],
+        ];
     }
 
     /**
@@ -32,14 +44,13 @@ class CommentController extends Controller
     {
         $comment = new Comment();
 
-        $user = User::findOne(Yii::$app->user->getId());
-        $comment->users = $user;
+        if ($comment->load(Yii::$app->request->post())) {
+            $comment->users = User::findOne(Yii::$app->user->getId());
+            $comment->lessons = Lesson::findOne($lessonId);
 
-        $lesson = Lesson::findOne($lessonId);
-        $comment->lessons = $lesson;
-
-        if ($comment->load(Yii::$app->request->post()) && $comment->save()) {
-            return $this->redirect("/lesson/view?id=$lessonId");
+            if ($comment->save()) {
+                return $this->redirect("/lesson/view?id=$lessonId");
+            }
         }
 
         return $this->goHome();

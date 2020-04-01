@@ -3,6 +3,7 @@
 namespace app\models;
 
 use app\models\query\CommentQuery;
+use app\models\query\LessonCommentQuery;
 use app\models\query\UserCommentQuery;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use yii\behaviors\TimestampBehavior;
