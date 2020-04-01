@@ -32,14 +32,6 @@ class CategoryController extends Controller
             ],
         ];
     }
-
-    public function actionTree($id=1)
-    {
-        return $this->render('tree', [
-            'data' => Category::findOne($id)->tree()
-        ]);
-    }
-
     /**
      * Lists all Category models.
      * @return mixed
@@ -141,4 +133,5 @@ class CategoryController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
 }
