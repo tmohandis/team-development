@@ -140,6 +140,28 @@ class Lesson extends \yii\db\ActiveRecord
     }
 
     /**
+     * [['comment' => 'some comment', 'username' => 'user', 'date' => '122332321' ], ... ]
+     */
+    public function getCommentsUsersArray()
+    {
+        $commentsUsersArray = [];
+        $lessonsComments = $this->getLessonComments()->all();
+        foreach ($lessonsComments as $lessonComment) {
+            $comment = Comment::findOne($lessonComment->comment_id);
+            $commentsUsers = $comment->getUserComments()->all();
+            foreach ($commentsUsers as $commentUser) {
+                $user = User::findOne($commentUser->user_id);
+                $commentsUsersArray[] = [
+                    'comment' => $comment->comment,
+                    'username' => $user->username,
+                    'date' => $comment->created_at
+                ];
+            }
+        }
+        return $commentsUsersArray;
+    }
+
+    /**
      * {@inheritdoc}
      * @return \app\models\queries\LessonQuery the active query used by this AR class.
      */
