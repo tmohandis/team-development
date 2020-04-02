@@ -99,7 +99,9 @@ AppAsset::register($this);
 </style>
 <div class="row">
     <div class="col">
-        <?php echo \wbraganca\fancytree\FancytreeWidget::widget([
+        <?php
+        $data = Category::findOne(1)->tree();
+        echo \wbraganca\fancytree\FancytreeWidget::widget([
             'options' =>[
                 'source' => Category::findOne(1)->tree(),
                 'extensions' => ['glyph'],
