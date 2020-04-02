@@ -58,6 +58,7 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Войти', 'url' => ['/site/login']];
     }else {
         $menuItems[] = ['label' => 'Мой профиль', 'url' => ['/user/profile']];
+        $menuItems[] = ['label' => 'Мои уроки', 'url' => ['/lesson/index']];
         $menuItems[] = '<li class="nav-item">' .
                Html::a('Выйти (' . Yii::$app->user->identity->username . ')', ['site/logout'], [
                    'class' => 'nav-link',
@@ -102,7 +103,7 @@ AppAsset::register($this);
         $data = Category::findOne(1)->tree();
         echo \wbraganca\fancytree\FancytreeWidget::widget([
             'options' =>[
-                'source' => $data,
+                'source' => Category::findOne(1)->tree(),
                 'extensions' => ['glyph'],
 
                 'focusOnSelect'=> true,
@@ -133,8 +134,7 @@ AppAsset::register($this);
         </div>
     </div>
 </div>
-<?php    // print_r( $short_description) ?>
-<?php    Modal::end(); ?>
+<?php Modal::end(); ?>
 
 <footer class="footer">
     <div class="container">

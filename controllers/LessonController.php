@@ -2,11 +2,14 @@
 
 namespace app\controllers;
 
+use app\models\Category;
 use app\models\Comment;
+use app\models\User;
 use Yii;
 use app\models\Lesson;
 use app\models\search\LessonSearch;
 use yii\behaviors\TimestampBehavior;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -22,13 +25,22 @@ class LessonController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@']
+                    ]
+                ],
+            ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
             ],
-            TimestampBehavior::className(),
+            TimestampBehavior::class,
         ];
     }
 
@@ -40,6 +52,9 @@ class LessonController extends Controller
     {
         $searchModel = new LessonSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $query = $dataProvider->query;
+        $query->byUser(Yii::$app->user->getId());
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -71,14 +86,20 @@ class LessonController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Lesson();
+        $lesson = new Lesson();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($lesson->load(Yii::$app->request->post())) {
+            $lesson->users = User::findOne(Yii::$app->user->getId());
+            $lesson->categories = Category::findOne($lesson->category_id);
+
+            if ($lesson->save()) {
+                return $this->redirect(['view', 'id' => $lesson->id]);
+            }
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'model' => $lesson,
+            'categoriesNames' => Category::getCategoriesNames()
         ]);
     }
 
@@ -91,14 +112,20 @@ class LessonController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $lesson = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($lesson->load(Yii::$app->request->post())) {
+            $lesson->users = User::findOne(Yii::$app->user->getId());
+            $lesson->categories = Category::findOne($lesson->category_id);
+
+            if ($lesson->save()) {
+                return $this->redirect(['view', 'id' => $lesson->id]);
+            }
         }
 
         return $this->render('update', [
-            'model' => $model,
+            'model' => $lesson,
+            'categoriesNames' => Category::getCategoriesNames()
         ]);
     }
 

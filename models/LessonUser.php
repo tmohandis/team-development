@@ -2,7 +2,12 @@
 
 namespace app\models;
 
+use app\models\query\LessonQuery;
+use app\models\query\LessonUserQuery;
+use app\models\query\UserQuery;
 use Yii;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "lesson_user".
@@ -13,7 +18,7 @@ use Yii;
  * @property Lesson $lesson
  * @property User $user
  */
-class LessonUser extends \yii\db\ActiveRecord
+class LessonUser extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -31,8 +36,8 @@ class LessonUser extends \yii\db\ActiveRecord
         return [
             [['lesson_id', 'user_id'], 'required'],
             [['lesson_id', 'user_id'], 'integer'],
-            [['lesson_id'], 'exist', 'skipOnError' => true, 'targetClass' => Lesson::className(), 'targetAttribute' => ['lesson_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['lesson_id'], 'exist', 'skipOnError' => true, 'targetClass' => Lesson::class, 'targetAttribute' => ['lesson_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -50,29 +55,29 @@ class LessonUser extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Lesson]].
      *
-     * @return \yii\db\ActiveQuery|\app\models\queries\LessonQuery
+     * @return ActiveQuery|LessonQuery
      */
     public function getLesson()
     {
-        return $this->hasOne(Lesson::className(), ['id' => 'lesson_id']);
+        return $this->hasOne(Lesson::class, ['id' => 'lesson_id']);
     }
 
     /**
      * Gets query for [[User]].
      *
-     * @return \yii\db\ActiveQuery|\app\models\queries\UserQuery
+     * @return ActiveQuery|UserQuery
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     /**
      * {@inheritdoc}
-     * @return \app\models\queries\LessonUserQuery the active query used by this AR class.
+     * @return LessonUserQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new \app\models\queries\LessonUserQuery(get_called_class());
+        return new LessonUserQuery(get_called_class());
     }
 }
