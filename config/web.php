@@ -22,6 +22,9 @@ $config = [
             'region' => 'ru-central1',
             'defaultBucket' => 'lessons-portal',
         ],
+        'authManager' => [
+            'class' => 'yii\rbac\PhpManager',
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'Adk9XWA6D9mSCElhwLZDIyqtp0ogmjOs',
