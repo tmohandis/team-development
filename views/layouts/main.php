@@ -81,7 +81,6 @@ AppAsset::register($this);
         <?= $content ?>
     </div>
 </div>
-<? $data = Category::findOne(1)->tree(); ?>
 <?php Modal::begin([
     'size' => 'modal-lg',
     'options' => [
@@ -99,7 +98,9 @@ AppAsset::register($this);
 </style>
 <div class="row">
     <div class="col">
-        <?php echo \wbraganca\fancytree\FancytreeWidget::widget([
+        <?php
+        $data = Category::findOne(1)->tree();
+        echo \wbraganca\fancytree\FancytreeWidget::widget([
             'options' =>[
                 'source' => $data,
                 'extensions' => ['glyph'],
