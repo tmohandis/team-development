@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Category */
+/* @var $categoriesNames app\models\Category[] */
 
 $this->title = 'Изменить категорию: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Категория', 'url' => ['index']];
@@ -16,6 +17,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'categoriesNames' => $categoriesNames
     ]) ?>
 
 </div>
