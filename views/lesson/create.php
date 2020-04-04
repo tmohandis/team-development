@@ -7,8 +7,6 @@ use yii\helpers\Html;
 /* @var $categoriesNames app\models\Category[] */
 
 $this->title = 'Новый урок';
-$this->params['breadcrumbs'][] = ['label' => 'Lessons', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="lesson-create">
 

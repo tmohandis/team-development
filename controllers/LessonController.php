@@ -7,7 +7,6 @@ use app\models\Comment;
 use app\models\User;
 use Yii;
 use app\models\Lesson;
-use app\models\search\LessonSearch;
 use yii\behaviors\TimestampBehavior;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -50,15 +49,12 @@ class LessonController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new LessonSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        $query = $dataProvider->query;
+        $query = Lesson::find();
         $query->byUser(Yii::$app->user->getId());
+        $lessons = $query->all();
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'lessons' => $lessons,
         ]);
     }
 

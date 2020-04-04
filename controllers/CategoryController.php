@@ -81,6 +81,7 @@ class CategoryController extends Controller
         }
         return $this->render('create', [
             'model' => $model,
+            'categoriesNames' => Category::getCategoriesNames(),
         ]);
     }
 
@@ -101,6 +102,7 @@ class CategoryController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'categoriesNames' => Category::getCategoriesNames(),
         ]);
     }
 

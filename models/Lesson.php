@@ -29,6 +29,7 @@ use yii\db\ActiveRecord;
  * @property int|null $file_id
  *
  * @property User $creator
+ * @property Category $category
  * @property LessonCategory[] $lessonCategories
  * @property LessonComment[] $lessonComments
  * @property LessonFile[] $lessonFiles
@@ -129,6 +130,11 @@ class Lesson extends ActiveRecord
     public function getCreator()
     {
         return $this->hasOne(User::class, ['id' => 'creator_id']);
+    }
+
+    public function getCategory()
+    {
+        return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
 
     /**
