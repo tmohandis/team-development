@@ -10,8 +10,6 @@ use yii\widgets\DetailView;
 /* @var $commentsUsers */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Lessons', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="lesson-view">
@@ -29,21 +27,19 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'category_id',
-            'title',
-            'preview',
-            'short_description:ntext',
-            'description:ntext',
-            'creator_id',
-            'created_at',
-            'updated_at',
-            'file_id',
-        ],
-    ]) ?>
+    <div class="user-card col-md-4 d-flex mb-5">
+        <img src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" class="img-thumbnail rounded-circle"
+             alt="Responsive image" style="width: 100px">
+        <div class="d-flex flex-column justify-content-center ml-3">
+            <h4><?= Html::encode($model->creator->username) ?></h4>
+            <p><?= date("j F Y, G:i", $model->created_at) ?></p>
+        </div>
+    </div>
+
+    <div class="main-container mb-5">
+        <p><?= $model->description ?></p>
+    </div>
+    <hr class="my-4">
 
     <h4>Комментарии</h4>
     <hr class="my-4">
