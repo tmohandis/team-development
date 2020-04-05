@@ -119,6 +119,9 @@ class LessonController extends Controller
             }
         }
 
+        //убирем из теста символы переноса строк
+        $lesson->description = str_replace('<br />', '', $lesson->description);
+
         return $this->render('update', [
             'model' => $lesson,
             'categoriesNames' => Category::getCategoriesNames()

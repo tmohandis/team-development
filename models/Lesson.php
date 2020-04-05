@@ -107,6 +107,22 @@ class Lesson extends ActiveRecord
         ];
     }
 
+    /**
+     * Вставляет HTML-код разрыва строки перед каждым переводом строки
+     *
+     * @param bool $insert
+     * @return bool
+     */
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        $this->description = nl2br($this->description);
+        return true;
+    }
+
     public function getUsers()
     {
         return $this->hasMany(User::class, ['id' => 'user_id'])->viaTable('lesson_user', ['lesson_id' => 'id']);
