@@ -103,7 +103,7 @@ AppAsset::register($this);
         $data = Category::findOne(1)->tree();
         echo \wbraganca\fancytree\FancytreeWidget::widget([
             'options' =>[
-                'source' => Category::findOne(1)->tree(),
+                'source' => $data,
                 'extensions' => ['glyph'],
 
                 'focusOnSelect'=> true,

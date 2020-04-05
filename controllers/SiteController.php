@@ -76,7 +76,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $lessons = Lesson::find()->all();
+        $category = Yii::$app->request->get('category', null);
+        if(isset($category))
+            $lessons = Lesson::findAll(['category_id' => $category]);
+        else $lessons = Lesson::find()->all();
         return $this->render('index', [
             'lessons' => $lessons
         ]);
