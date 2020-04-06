@@ -16,7 +16,7 @@ class m200302_165210_create_lesson_table extends Migration
             'id' => $this->primaryKey(),
             'category_id' => $this->integer()->notNull()->defaultValue(1),
             'title' => $this->string(255)->notNull(),
-            'preview' => $this->string(255)->notNull(),
+            'preview' => $this->string(255),
             'short_description' => $this->text()->notNull(),
             'description' => $this->text()->notNull(),
             'creator_id' => $this->integer()->notNull(),

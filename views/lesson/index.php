@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Lesson;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -24,8 +25,7 @@ $this->title = 'Мои уроки';
                     <div class="card card-cascade narrower ">
 
                         <div class="view view-cascade overlay">
-                            <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(147).jpg"
-                                 alt="Card image cap">
+                            <?= Html::img($lesson->getThumbUploadUrl('preview', Lesson::LESSON_PREVIEW), ['class' => 'img-fluid p-1']) ?>
                         </div>
 
                         <div class="card-body card-body-cascade">

@@ -9,6 +9,8 @@ use app\models\query\LessonQuery;
 use app\models\query\LessonUserQuery;
 use app\models\query\UserQuery;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
+use mohorev\file\UploadImageBehavior;
+use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
@@ -38,9 +40,16 @@ use yii\db\ActiveRecord;
  * @property User[] $users
  * @property Category[] $categories
  * @property File[] $files
+ *
+ * @mixin UploadImageBehavior
  */
 class Lesson extends ActiveRecord
 {
+    const LESSON_PREVIEW = 'avatarPreview';
+
+    const SCENARIO_INSERT = 'insert';
+    const SCENARIO_UPDATE = 'update';
+
     const RELATION_USER = 'users';
     const RELATION_CATEGORY = 'categories';
     const RELATION_FILE = 'files';
@@ -62,6 +71,22 @@ class Lesson extends ActiveRecord
                     self::RELATION_FILE
                 ],
             ],
+            [
+                'class' => UploadImageBehavior::class,
+                //имя файла с аватаром
+                'attribute' => 'preview',
+                //сценарий загрузки
+                'scenarios' => [self::SCENARIO_INSERT, self::SCENARIO_UPDATE],
+                'placeholder' => '@webroot/upload/profile/defaultAvatar.jpg',
+                //путь к месту загрузки аватара
+                'path' => '@webroot/upload/user/{creator.id}/lessons/{id}',
+                //url доступа к аватару
+                'url' => Yii::$app->params['hosts.team'] .
+                    Yii::getAlias('@web/upload/user/{creator.id}/lessons/{id}'),
+                'thumbs' => [
+                    self::LESSON_PREVIEW => ['width' => 320, 'height' => 220],
+                ],
+            ],
         ];
     }
 
@@ -80,11 +105,13 @@ class Lesson extends ActiveRecord
     {
         return [
             [['category_id'], 'integer'],
-            [['title', 'preview', 'short_description','description'], 'required'],
+            [['title', 'short_description','description'], 'required'],
             [['short_description', 'description'], 'string'],
-            [['title'], 'string', 'min' => 10,'max' => 255],
+            [['description'], 'filter', 'filter' => '\yii\helpers\HtmlPurifier::process'],
+            [['title'], 'string', 'min' => 5,'max' => 255],
             [['short_description', 'description'], 'string', 'min' => 10,'max' => 10000],
             [['creator_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['creator_id' => 'id']],
+            [['preview'], 'image', 'extensions' => 'jpg, jpeg, gif, png', 'on' => [self::SCENARIO_INSERT, self::SCENARIO_UPDATE]],
         ];
     }
 
@@ -105,22 +132,6 @@ class Lesson extends ActiveRecord
             'updated_at' => 'Updated At',
             'file_id' => 'File ID',
         ];
-    }
-
-    /**
-     * Вставляет HTML-код разрыва строки перед каждым переводом строки
-     *
-     * @param bool $insert
-     * @return bool
-     */
-    public function beforeSave($insert)
-    {
-        if (!parent::beforeSave($insert)) {
-            return false;
-        }
-
-        $this->description = nl2br($this->description);
-        return true;
     }
 
     public function getUsers()
@@ -199,7 +210,7 @@ class Lesson extends ActiveRecord
     }
 
     /**
-     * [['comment' => 'some comment', 'username' => 'user', 'date' => '122332321' ], ... ]
+     * [['comment' => 'some comment', 'username' => 'user', 'userId' => 'id', 'date' => '122332321' ], ... ]
      */
     public function getCommentsUsersArray()
     {
@@ -213,6 +224,7 @@ class Lesson extends ActiveRecord
                 $commentsUsersArray[] = [
                     'comment' => $comment->comment,
                     'username' => $user->username,
+                    'userId' => $user->id,
                     'date' => $comment->created_at
                 ];
             }

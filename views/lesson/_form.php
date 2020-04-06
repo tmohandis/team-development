@@ -1,7 +1,9 @@
 <?php
 
+use app\models\Lesson;
+use vova07\imperavi\Widget;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Lesson */
@@ -9,24 +11,38 @@ use yii\widgets\ActiveForm;
 /* @var $categotiesNames app\models\Category[] */
 ?>
 
-<div class="lesson-form">
+<div class="lesson-form mt-3">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'options' => ['enctype' => 'multipart/form-data'],
+        'layout' => 'horizontal',
+    ]);
+    ?>
 
     <?= $form->field($model, 'category_id')->label('Категория')->dropDownList($categoriesNames)?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'preview')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'short_description')->textarea(['rows' => 3]) ?>
 
-    <?= $form->field($model, 'short_description')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'preview')->fileInput(['accept' => 'image/*'])
+        ->label('Превью' . Html::img($model->getThumbUploadUrl('preview', Lesson::LESSON_PREVIEW), ['class' => 'ml-5 mt-1'])) ?>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 15]) ?>
+    <?= $form->field($model, 'description')->label('')->widget(Widget::class, [
+        'settings' => [
+            'lang' => 'ru',
+            'minHeight' => 200,
+            'plugins' => [
+                'fullscreen',
+                'fontcolor',
+                'fontfamily',
+                'fontsize',
+                'table'
+            ],
+        ],
+    ])?>
+    <hr class="mb-4">
 
-    <div class="form-group">
-        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
-    </div>
-
+    <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary btn-block']) ?>
     <?php ActiveForm::end(); ?>
-
 </div>
