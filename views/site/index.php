@@ -87,7 +87,7 @@ $this->title = 'My Yii Application';
                                     <h4 class="font-weight-bold card-title"><?= Html::encode($lesson->title) ?></h4>
                                     <p class="card-text"><?= Html::encode($lesson->short_description) ?></p>
 
-                                    <?= Html::a('К уроку', ['view', 'id' => $lesson->id], ['class' => 'btn btn-unique center-block text-white']) ?>
+                                    <?= Html::a('К уроку', ['lesson/view', 'id' => $lesson->id], ['class' => 'btn btn-unique center-block text-white']) ?>
                                 </div>
                             </div>
                         </div>
