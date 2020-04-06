@@ -24,7 +24,9 @@
         "wokster/yii2-nested-sets-tree-behavior": "*",
         "yii2mod/yii2-tree": "*",
         "la-haute-societe/yii2-save-relations-behavior": "*",
+        "mohorev/yii2-upload-behavior": "*",
         "aws/aws-sdk-php": "^3.134",
+        "yiisoft/yii2-imagine": "^2.2",
         "chemezov/yii2-yandex-cloud": "^3.0"
     },
     "require-dev": {

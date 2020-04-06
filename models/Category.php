@@ -82,6 +82,18 @@ class Category extends ActiveRecord
         return ArrayHelper::map($categories, 'id', 'name');
     }
 
+
+    /**
+     * {@inheritdoc}
+     * @return array of identifiers of the category and all children's identifiers.
+     */
+    public function getIdentifiersList()
+    {
+        $children = ArrayHelper::getColumn($this->children()->all(), 'id');
+        array_push($children, $this->id);
+        return $children;
+    }
+
     /**
      * {@inheritdoc}
      * @return CategoryQuery the active query used by this AR class.

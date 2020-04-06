@@ -46,7 +46,7 @@ $config = [
                 'class' => Swift_SmtpTransport::class,
                 'host' => 'smtp.yandex.ru',
                 'username' => 'geekteamdev@yandex.ru',
-                'password' => 'university2020',
+                'password' => 'geekUniversity2020',
                 'port' => '465',
                 'encryption' => 'ssl',
             ],

@@ -2,13 +2,18 @@
 
 /* @var app\models\User $model */
 
+use app\models\User;
 use yii\bootstrap4\Html; ?>
 
 <div class="row">
     <div class="col-md-4">
         <div class="card">
-            <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" alt="Card image cap">
-            <?= Html::a('Редактировать профиль', 'update', ['class' => 'btn btn-primary']) ?>
+            <div class="card-body">
+                <div style="text-align: center">
+                    <?= Html::img($model->getThumbUploadUrl('avatar', User::AVATAR_PREVIEW), ['class' => 'img-fluid',]) ?>
+                    <?= Html::a('Редактировать профиль', 'update', ['class' => 'btn btn-primary']) ?>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-md-8">

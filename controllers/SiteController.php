@@ -1,6 +1,8 @@
 <?php
+
 namespace app\controllers;
 
+use app\models\Category;
 use app\models\forms\ResendVerificationEmailForm;
 use app\models\forms\VerifyEmailForm;
 use app\models\Lesson;
@@ -16,6 +18,7 @@ use app\models\forms\PasswordResetRequestForm;
 use app\models\forms\ResetPasswordForm;
 use app\models\forms\SignupForm;
 use app\models\forms\ContactForm;
+use yii\helpers\ArrayHelper;
 
 /**
  * Site controller
@@ -74,9 +77,15 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($category = null)
     {
-        $lessons = Lesson::find()->all();
+        if (isset($category)) {
+            $category = Category::findOne($category);
+            $values = $category->getIdentifiersList();
+            $lessons = Lesson::findAll(['category_id' => $values]);
+        } else {
+            $lessons = Lesson::find()->all();
+        }
         return $this->render('index', [
             'lessons' => $lessons
         ]);
@@ -223,8 +232,8 @@ class SiteController extends Controller
      * Verify email address
      *
      * @param string $token
-     * @throws BadRequestHttpException
      * @return yii\web\Response
+     * @throws BadRequestHttpException
      */
     public function actionVerifyEmail($token)
     {
