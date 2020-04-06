@@ -28,9 +28,6 @@
         "aws/aws-sdk-php": "^3.134",
         "yiisoft/yii2-imagine": "^2.2",
         "chemezov/yii2-yandex-cloud": "^3.0"
-        "mohorev/yii2-upload-behavior": "*",
-        "yiisoft/yii2-imagine": "^2.2",
-        "la-haute-societe/yii2-save-relations-behavior": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
