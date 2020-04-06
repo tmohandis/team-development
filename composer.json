@@ -23,9 +23,9 @@
         "wbraganca/yii2-fancytree-widget": "*",
         "wokster/yii2-nested-sets-tree-behavior": "*",
         "yii2mod/yii2-tree": "*",
-        "la-haute-societe/yii2-save-relations-behavior": "*",
-        "aws/aws-sdk-php": "^3.134",
-        "chemezov/yii2-yandex-cloud": "^3.0"
+        "mohorev/yii2-upload-behavior": "*",
+        "yiisoft/yii2-imagine": "^2.2",
+        "la-haute-societe/yii2-save-relations-behavior": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
