@@ -4,6 +4,7 @@
 /* @var $content string */
 
 use app\models\Category;
+use app\models\User;
 use yii\helpers\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
@@ -58,13 +59,16 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Войти', 'url' => ['/site/login']];
     }else {
         $menuItems[] = ['label' => 'Мой профиль', 'url' => ['/user/profile']];
+        $menuItems[] = ['label' => 'Мои уроки', 'url' => ['/lesson/index']];
         $menuItems[] = '<li class="nav-item">' .
-               Html::a('Выйти (' . Yii::$app->user->identity->username . ')', ['site/logout'], [
-                   'class' => 'nav-link',
-                   'data' => [
-                       'method' => 'post',
-                   ],
-               ])
+            Html::a('Выйти (' . Yii::$app->user->identity->username . Html::img(Yii::$app->user->identity
+                    ->getThumbUploadUrl('avatar', User::AVATAR_ICO), ['class' => 'img-fluid rounded-circle']) .')',
+                ['site/logout'], [
+                    'class' => 'nav-link',
+                    'data' => [
+                        'method' => 'post',
+                    ],
+                ])
             . '</li>';
     }
     echo Nav::widget([
@@ -81,7 +85,6 @@ AppAsset::register($this);
         <?= $content ?>
     </div>
 </div>
-<? $data = Category::findOne(1)->tree(); ?>
 <?php Modal::begin([
     'size' => 'modal-lg',
     'options' => [
@@ -99,7 +102,9 @@ AppAsset::register($this);
 </style>
 <div class="row">
     <div class="col">
-        <?php echo \wbraganca\fancytree\FancytreeWidget::widget([
+        <?php
+        $data = Category::findOne(1)->tree();
+        echo \wbraganca\fancytree\FancytreeWidget::widget([
             'options' =>[
                 'source' => $data,
                 'extensions' => ['glyph'],
@@ -132,8 +137,7 @@ AppAsset::register($this);
         </div>
     </div>
 </div>
-<?php    // print_r( $short_description) ?>
-<?php    Modal::end(); ?>
+<?php Modal::end(); ?>
 
 <footer class="footer">
     <div class="container">

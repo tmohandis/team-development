@@ -5,7 +5,8 @@ namespace app\models;
 use app\models\query\CommentQuery;
 use app\models\query\LessonCommentQuery;
 use app\models\query\UserCommentQuery;
-use Yii;
+use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -18,15 +19,38 @@ use yii\db\ActiveRecord;
  *
  * @property LessonComment[] $lessonComments
  * @property UserComment[] $userComments
+ * @property User[] $users
+ * @property Lesson[] $lessons
+ *
+ * @mixin SaveRelationsBehavior
  */
 class Comment extends ActiveRecord
 {
+    const RELATION_USER = 'users';
+    const RELATION_LESSON = 'lessons';
+
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
         return 'comment';
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'updatedAtAttribute' => false,
+            ],
+            [
+                'class' => SaveRelationsBehavior::class,
+                'relations' => [self::RELATION_USER, self::RELATION_LESSON],
+            ],
+        ];
     }
 
     /**
@@ -35,7 +59,7 @@ class Comment extends ActiveRecord
     public function rules()
     {
         return [
-            [['comment', 'created_at'], 'required'],
+            [['comment'], 'required'],
             [['comment'], 'string', 'min' => 5, 'max' => 1000],
             [['created_at'], 'integer'],
         ];
@@ -47,10 +71,18 @@ class Comment extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'comment' => 'Comment',
-            'created_at' => 'Created At',
+            'comment' => 'Комментарий'
         ];
+    }
+
+    public function getUsers()
+    {
+        return $this->hasMany(User::class, ['id' => 'user_id'])->viaTable('user_comment', ['comment_id' => 'id']);
+    }
+
+    public function getLessons()
+    {
+        return $this->hasMany(Lesson::class, ['id' => 'lesson_id'])->viaTable('lesson_comment', ['comment_id' => 'id']);
     }
 
     /**

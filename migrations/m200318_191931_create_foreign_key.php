@@ -13,6 +13,7 @@ class m200318_191931_create_foreign_key extends Migration
     public function safeUp()
     {
         $this->addForeignKey('fx_lesson_user', 'lesson', ['creator_id'], 'user', ['id']);
+        $this->addForeignKey('fx_lesson_category', 'lesson', ['category_id'], 'category', ['id']);
         $this->addForeignKey('fx_lesson_file_many_1', 'lesson_file', ['lesson_id'], 'lesson', ['id']);
         $this->addForeignKey('fx_lesson_file_many_2', 'lesson_file', ['file_id'], 'file', ['id']);
         $this->addForeignKey('fx_lesson_comment_many_1', 'lesson_comment', ['lesson_id'], 'lesson', ['id']);
@@ -34,6 +35,7 @@ class m200318_191931_create_foreign_key extends Migration
     public function safeDown()
     {
         $this->dropForeignKey('fx_lesson_user','lesson');
+        $this->dropForeignKey('fx_lesson_category','lesson');
         $this->dropForeignKey('fx_lesson_file_many_1', 'lesson_file');
         $this->dropForeignKey('fx_lesson_file_many_2', 'lesson_file');
         $this->dropForeignKey('fx_lesson_comment_many_1', 'lesson_comment');

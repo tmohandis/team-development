@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use mohorev\file\UploadImageBehavior;
 use Yii;
 use yii\base\Exception;
 use yii\base\NotSupportedException;
@@ -25,10 +26,18 @@ use yii\web\IdentityInterface;
  * @property string $about
  * @property string $avatar
  *
+ * * @mixin UploadImageBehavior
+ *
  * @property string $password write-only password
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+    const AVATAR_PREVIEW = 'preview';
+    const AVATAR_ICO = 'ico';
+
+    const SCENARIO_UPDATE = 'update';
+    const SCENARIO_INSERT = 'insert';
+
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
@@ -57,7 +66,26 @@ class User extends ActiveRecord implements IdentityInterface
     public function behaviors()
     {
         return [
-            TimestampBehavior::class,
+            ['class' => TimestampBehavior::class,
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at'],
+            [
+                'class' => UploadImageBehavior::class,
+                //имя файла с аватаром
+                'attribute' => 'avatar',
+                //сценарий загрузки
+                'scenarios' => [self::SCENARIO_UPDATE],
+                //'placeholder' => '@app/modules/user/assets/images/userpic.jpg',
+                //путь к месту загрузки аватара
+                'path' => '@webroot/upload/user/{id}',
+                //url доступа к аватару
+                'url' => Yii::$app->params['hosts.team'] .
+                    Yii::getAlias('@web/upload/user/{id}'),
+                'thumbs' => [
+                    self::AVATAR_ICO => ['width' => 30, 'height' => 30, 'quality' => 90],
+                    self::AVATAR_PREVIEW => ['width' => 200, 'height' => 200],
+                ],
+            ],
         ];
     }
     /**
@@ -74,6 +102,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['username', 'email'], 'required'],
             [['username', 'email', 'phone', 'about'], 'trim'],
             ['phone', 'number'],
+            ['avatar', 'image', 'extensions' => 'jpg, jpeg, gif, png', 'on' => [self::SCENARIO_UPDATE]],
         ];
     }
     /**

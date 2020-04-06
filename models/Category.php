@@ -5,8 +5,8 @@ namespace app\models;
 use app\models\query\CategoryQuery;
 use creocoder\nestedsets\NestedSetsBehavior;
 use \wokster\treebehavior\NestedSetsTreeBehavior;
-use Yii;
-
+use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "category".
@@ -21,9 +21,7 @@ use Yii;
  *
  * @property LessonCategory[] $lessonCategories
  */
-
-
-class Category extends \yii\db\ActiveRecord
+class Category extends ActiveRecord
 {
     public $parent_category;
 
@@ -31,11 +29,11 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             'tree' => [
-                'class' => NestedSetsBehavior::className(),
+                'class' => NestedSetsBehavior::class,
                 'treeAttribute' => 'tree',
             ],
             'htmlTree' => [
-                'class' => NestedSetsTreeBehavior::className()
+                'class' => NestedSetsTreeBehavior::class,
             ],
         ];
     }
@@ -77,9 +75,16 @@ class Category extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function getCategoriesNames()
+    {
+        $categories = Category::find()->select(['id', 'name'])->all();
+
+        return ArrayHelper::map($categories, 'id', 'name');
+    }
+
     /**
      * {@inheritdoc}
-     * @return \app\models\query\CategoryQuery the active query used by this AR class.
+     * @return CategoryQuery the active query used by this AR class.
      */
 
     public static function find()
