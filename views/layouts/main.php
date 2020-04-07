@@ -1,6 +1,6 @@
-
 <?php
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use app\models\Category;
@@ -57,13 +57,15 @@ AppAsset::register($this);
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Зарегистрироваться', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Войти', 'url' => ['/site/login']];
-    }else {
+    } else {
         $menuItems[] = ['label' => 'Мой профиль', 'url' => ['/user/profile']];
         $menuItems[] = ['label' => 'Мои уроки', 'url' => ['/lesson/index']];
         $menuItems[] = '<li class="nav-item">' .
-            Html::a('Выйти (' . Yii::$app->user->identity->username . Html::img(Yii::$app->user->identity
-                    ->getThumbUploadUrl('avatar', User::AVATAR_ICO), ['class' => 'img-fluid rounded-circle']) .')',
-                ['site/logout'], [
+            Html::a('Выйти (' . Yii::$app->user->identity->username . ' '
+                . Html::img(Yii::$app->user->identity->getThumbUploadUrl('avatar', User::AVATAR_ICO), ['class' => 'img-fluid rounded-circle'])
+                . ' )',
+                ['site/logout'],
+                [
                     'class' => 'nav-link',
                     'data' => [
                         'method' => 'post',
@@ -77,11 +79,12 @@ AppAsset::register($this);
     ]);
     NavBar::end();
     ?>
+
     <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        <?=Alert::widget() ?>
+        <?= Alert::widget() ?>
         <?= $content ?>
     </div>
 </div>

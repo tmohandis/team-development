@@ -10,7 +10,7 @@ use yii\bootstrap4\Html; ?>
         <div class="card">
             <div class="card-body">
                 <div style="text-align: center">
-                    <?= Html::img($model->getThumbUploadUrl('avatar', User::AVATAR_PREVIEW), ['class' => 'img-fluid',]) ?>
+                    <?= Html::img($model->getThumbUploadUrl('avatar', User::AVATAR_PREVIEW), ['class' => 'img-fluid']) ?>
                     <?= Html::a('Редактировать профиль', 'update', ['class' => 'btn btn-primary']) ?>
                 </div>
             </div>

@@ -4,6 +4,7 @@
 
 /* @var $lessons app\models\Lesson[] */
 
+use app\models\Lesson;
 use yii\bootstrap4\Html;
 use yii\widgets\Pjax;
 use yii\bootstrap4\ActiveForm;
@@ -76,10 +77,8 @@ $this->title = 'My Yii Application';
                         <div class="col-lg-4 col-md-12 mb-4">
                             <div class="card card-cascade narrower ">
 
-                                <div class="view view-cascade overlay">
-                                    <img class="card-img-top"
-                                         src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(147).jpg"
-                                         alt="Card image cap">
+                                <div class="view view-cascade overlay d-flex justify-content-center">
+                                    <?= Html::img($lesson->getThumbUploadUrl('preview', Lesson::LESSON_PREVIEW), ['class' => 'img-fluid p-1']) ?>
                                 </div>
 
                                 <div class="card-body card-body-cascade">
