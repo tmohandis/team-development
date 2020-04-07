@@ -79,8 +79,7 @@ class User extends ActiveRecord implements IdentityInterface
                 //путь к месту загрузки аватара
                 'path' => '@webroot/upload/user/{id}',
                 //url доступа к аватару
-                'url' => Yii::$app->params['hosts.team'] .
-                    Yii::getAlias('@web/upload/user/{id}'),
+                'url' => '@web/upload/user/{id}',
                 'thumbs' => [
                     self::AVATAR_ICO => ['width' => 30, 'height' => 30, 'quality' => 90],
                     self::AVATAR_PREVIEW => ['width' => 200, 'height' => 200],
