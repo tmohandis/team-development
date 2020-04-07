@@ -84,6 +84,7 @@ class LessonController extends Controller
     {
         $lesson = new Lesson();
 
+        $lesson->setScenario(Lesson::SCENARIO_INSERT);
         if ($lesson->load(Yii::$app->request->post())) {
             $lesson->users = User::findOne(Yii::$app->user->getId());
             $lesson->categories = Category::findOne($lesson->category_id);
@@ -110,6 +111,7 @@ class LessonController extends Controller
     {
         $lesson = $this->findModel($id);
 
+        $lesson->setScenario(Lesson::SCENARIO_UPDATE);
         if ($lesson->load(Yii::$app->request->post())) {
             $lesson->users = User::findOne(Yii::$app->user->getId());
             $lesson->categories = Category::findOne($lesson->category_id);
@@ -118,9 +120,6 @@ class LessonController extends Controller
                 return $this->redirect(['view', 'id' => $lesson->id]);
             }
         }
-
-        //убирем из теста символы переноса строк
-        $lesson->description = str_replace('<br />', '', $lesson->description);
 
         return $this->render('update', [
             'model' => $lesson,

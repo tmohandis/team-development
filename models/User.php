@@ -26,7 +26,7 @@ use yii\web\IdentityInterface;
  * @property string $about
  * @property string $avatar
  *
- * * @mixin UploadImageBehavior
+ * @mixin UploadImageBehavior
  *
  * @property string $password write-only password
  */
@@ -66,18 +66,16 @@ class User extends ActiveRecord implements IdentityInterface
     public function behaviors()
     {
         return [
-            ['class' => TimestampBehavior::class,
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at'],
+            TimestampBehavior::class,
             [
                 'class' => UploadImageBehavior::class,
                 //имя файла с аватаром
                 'attribute' => 'avatar',
                 //сценарий загрузки
-                'scenarios' => [self::SCENARIO_UPDATE],
-                //'placeholder' => '@app/modules/user/assets/images/userpic.jpg',
+                'scenarios' => [self::SCENARIO_INSERT, self::SCENARIO_UPDATE],
+                'placeholder' => '@webroot/upload/profile/defaultAvatar.jpg',
                 //путь к месту загрузки аватара
-                'path' => '@webroot/upload/user/{id}',
+                'path' => '@webroot/upload/user/{id}/avatar',
                 //url доступа к аватару
                 'url' => '@web/upload/user/{id}',
                 'thumbs' => [
@@ -101,7 +99,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['username', 'email'], 'required'],
             [['username', 'email', 'phone', 'about'], 'trim'],
             ['phone', 'number'],
-            ['avatar', 'image', 'extensions' => 'jpg, jpeg, gif, png', 'on' => [self::SCENARIO_UPDATE]],
+            ['avatar', 'image', 'extensions' => 'jpg, jpeg, gif, png', 'on' => [self::SCENARIO_INSERT, self::SCENARIO_UPDATE]],
         ];
     }
     /**
@@ -111,8 +109,10 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
     }
+
     /**
      * {@inheritdoc}
+     * @throws NotSupportedException
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {

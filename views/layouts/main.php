@@ -1,6 +1,6 @@
-
 <?php
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use app\models\Category;
@@ -92,7 +92,7 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        <?=Alert::widget() ?>
+        <?= Alert::widget() ?>
         <?= $content ?>
     </div>
 </div>

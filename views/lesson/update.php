@@ -6,14 +6,11 @@ use yii\helpers\Html;
 /* @var $model app\models\Lesson */
 /* @var $categoriesNames app\models\Category[] */
 
-$this->title = 'Изменить урок: ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Lessons', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Изменить урок';
 ?>
-<div class="lesson-update">
+<div class="lesson-update mt-3">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h2><?= Html::encode($this->title) ?></h2>
 
     <?= $this->render('_form', [
         'model' => $model,
