@@ -2,7 +2,6 @@
 
 use app\models\Lesson;
 use yii\helpers\Html;
-use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $lessons app\models\Lesson[] */

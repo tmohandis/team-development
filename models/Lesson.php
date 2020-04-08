@@ -45,7 +45,7 @@ use yii\db\ActiveRecord;
  */
 class Lesson extends ActiveRecord
 {
-    const LESSON_PREVIEW = 'avatarPreview';
+    const LESSON_PREVIEW = 'lessonPreview';
 
     const SCENARIO_INSERT = 'insert';
     const SCENARIO_UPDATE = 'update';
@@ -79,10 +79,10 @@ class Lesson extends ActiveRecord
                 'scenarios' => [self::SCENARIO_INSERT, self::SCENARIO_UPDATE],
                 'placeholder' => '@webroot/upload/profile/defaultAvatar.jpg',
                 //путь к месту загрузки аватара
-                'path' => '@webroot/upload/user/{creator.id}/lessons/{id}',
+                'path' => '@webroot/upload/user/{creator.id}/lessons/{id}/preview',
                 //url доступа к аватару
                 'url' => Yii::$app->params['hosts.team'] .
-                    Yii::getAlias('@web/upload/user/{creator.id}/lessons/{id}'),
+                    Yii::getAlias('@web/upload/user/{creator.id}/lessons/{id}/preview'),
                 'thumbs' => [
                     self::LESSON_PREVIEW => ['width' => 320, 'height' => 220],
                 ],
