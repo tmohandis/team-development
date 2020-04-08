@@ -62,9 +62,11 @@ $config = [
         ],
         'db' => $db,
         'urlManager' => [
+
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '<controller:[\w-]+>/<action:(view|create|update|delete)>/<id:\d+>' => '<controller>/<action>',
             ],
         ],
     ],
