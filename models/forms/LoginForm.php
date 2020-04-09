@@ -21,7 +21,15 @@ class LoginForm extends Model
 
     private $_user = false;
 
-
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Имя пользователя',
+            'email' => 'E-mail',
+            'password' => 'Пароль',
+            'rememberMe' => 'Запомнить меня',
+        ];
+    }
     /**
      * @return array the validation rules.
      */

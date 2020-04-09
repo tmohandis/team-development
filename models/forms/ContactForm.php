@@ -16,6 +16,16 @@ class ContactForm extends Model
     public $body;
     public $verifyCode;
 
+    public function attributeLabels()
+    {
+        return [
+            'name' => 'Ваше имя',
+            'email' => 'Ваш e-mail',
+            'subject' => 'Тема',
+            'body' => 'Текст',
+            'verifyCode' => 'Введите код',
+        ];
+    }
 
     /**
      * {@inheritdoc}
@@ -32,15 +42,6 @@ class ContactForm extends Model
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'verifyCode' => 'Verification Code',
-        ];
-    }
 
     /**
      * Sends an email to the specified email address using the information collected by this model.

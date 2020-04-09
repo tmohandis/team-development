@@ -13,6 +13,7 @@ use yii\bootstrap4\Modal;
 use app\assets\AppAsset;
 use app\widgets\Alert;
 
+$this->title = 'GeekProject';
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -53,16 +54,11 @@ AppAsset::register($this);
             <ul class="navbar-nav ml-auto nav-flex-icons">
                 <?php if (Yii::$app->user->isGuest): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="/site/singup">Регистрация</a>
+                        <a class="nav-link" href="/site/signup">Регистрация</a>
                     </li> <li class="nav-item">
                         <a class="nav-link" href="/site/login">Войти</a>
                     </li>
                 <?php else: ?>
-                    <li class="nav-item">
-                        <a class="nav-link waves-effect waves-light">1
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                    </li>
                     <li class="nav-item avatar dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
