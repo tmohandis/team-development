@@ -1,13 +1,11 @@
 <?php
 
 /* @var $this yii\web\View */
-
 /* @var $lessons app\models\Lesson[] */
 
 use app\models\Lesson;
 use yii\bootstrap4\Html;
 use yii\widgets\Pjax;
-use yii\bootstrap4\ActiveForm;
 use app\models\Category;
 
 $this->title = 'My Yii Application';

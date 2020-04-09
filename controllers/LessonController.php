@@ -5,6 +5,9 @@ namespace app\controllers;
 use app\models\Category;
 use app\models\Comment;
 use app\models\User;
+use vova07\imperavi\actions\DeleteFileAction;
+use vova07\imperavi\actions\GetImagesAction;
+use vova07\imperavi\actions\UploadFileAction;
 use Yii;
 use app\models\Lesson;
 use yii\behaviors\TimestampBehavior;
@@ -41,6 +44,33 @@ class LessonController extends Controller
                 ],
             ],
             TimestampBehavior::class,
+        ];
+    }
+
+    public function actions()
+    {
+        $userId = Yii::$app->user->identity->getId();
+        $lessonId = Yii::$app->request->get('id');
+
+        return [
+            'images-get' => [
+                'class' => GetImagesAction::class,
+                'url' => Yii::$app->params['hosts.team'] .
+                    Yii::getAlias("@web/upload/user/{$userId}/lessons/$lessonId"),
+                'path' => "@webroot/upload/user/{$userId}/lessons/$lessonId",
+            ],
+            'image-upload' => [
+                'class' => UploadFileAction::class,
+                'url' => Yii::$app->params['hosts.team'] .
+                    Yii::getAlias("@web/upload/user/{$userId}/lessons/$lessonId"),
+                'path' => "@webroot/upload/user/{$userId}/lessons/$lessonId",
+            ],
+            'file-delete' => [
+                'class' => DeleteFileAction::class,
+                'url' => Yii::$app->params['hosts.team'] .
+                    Yii::getAlias("@web/upload/user/{$userId}/lessons/$lessonId"),
+                'path' => "@webroot/upload/user/{$userId}/lessons/$lessonId",
+            ],
         ];
     }
 

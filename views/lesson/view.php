@@ -39,8 +39,13 @@ $this->title = $model->title;
         </div>
     </div>
 
+    <style>
+        .main-container > p > img {
+            max-width: 100%;
+        }
+    </style>
     <div class="main-container mb-5">
-        <p><?= HtmlPurifier::process($model->description) ?></p>
+        <?= HtmlPurifier::process($model->description) ?>
     </div>
     <hr class="my-4">
 

@@ -1,9 +1,11 @@
 <?php
 
 use app\models\Lesson;
+use vova07\imperavi\bundles\ImageManagerAsset;
 use vova07\imperavi\Widget;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Lesson */
@@ -32,13 +34,19 @@ use yii\bootstrap4\ActiveForm;
         'settings' => [
             'lang' => 'ru',
             'minHeight' => 200,
+            'imageManagerJson' => Url::to(['/lesson/images-get', 'id' => $model->id]),
+            'imageUpload' => Url::to(['/lesson/image-upload', 'id' => $model->id]),
+            'imageDelete' => Url::to(['/lesson/file-delete', 'id' => $model->id]),
             'plugins' => [
                 'fullscreen',
                 'fontcolor',
                 'fontfamily',
                 'fontsize',
-                'table'
+                'table',
             ],
+        ],
+        'plugins' => [
+            'imagemanager' => ImageManagerAsset::class,
         ],
     ])?>
     <hr class="mb-4">
