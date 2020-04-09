@@ -16,6 +16,14 @@ class SignupForm extends Model
     public $email;
     public $password;
 
+    public function attributeLabels()
+    {
+        return [
+        'username' => 'Имя пользователя',
+        'email' => 'E-mail',
+        'password' => 'Пароль',
+        ];
+    }
 
     /**
      * {@inheritdoc}
